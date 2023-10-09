@@ -1,0 +1,28 @@
+version: "1"
+services:
+  app:
+    container_name: profiles_app
+    restart: always
+    build: .
+    ports: 
+      - '5000:3000'
+    external_links:
+      - mongo
+    networks:
+      - node-network
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '7017:27017'
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    ports:
+     - '8083:8081'
+     
+networks:
+  node-network:
+    driver: bridge
